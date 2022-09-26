@@ -1,13 +1,17 @@
 package com.peertutor.ReviewMgr.controller;
 
 import com.peertutor.ReviewMgr.model.Review;
+import com.peertutor.ReviewMgr.model.viewmodel.response.ReviewRes;
+import com.peertutor.ReviewMgr.model.viewmodel.request.ReviewReq;
 import com.peertutor.ReviewMgr.repository.ReviewRepository;
+import com.peertutor.ReviewMgr.dto.ReviewDTO;
+import com.peertutor.ReviewMgr.service.ReviewService;
 import com.peertutor.ReviewMgr.util.AppConfig;
+import com.peertutor.ReviewMgr.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.SpringVersion;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,6 +23,10 @@ public class ReviewController {
     AppConfig appConfig;
     @Autowired
     private ReviewRepository reviewRepository;// = new CustomerRepository();
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private StudentService studentService;
     @GetMapping(path="/")
     public @ResponseBody String defaultResponse(){
 
@@ -55,33 +63,46 @@ public class ReviewController {
     // do not remove this
     @GetMapping(path="/health")
     public @ResponseBody String healthCheck(){
-        return "Ok";
+        return "Ok 2";
     }
 
-    @PostMapping(path = "/add")
-    public @ResponseBody String addNewCustomer(@RequestBody Map<String, String> customerDTO) {
+    @PostMapping(path = "/review")
+    public @ResponseBody ResponseEntity<ReviewRes> addNewReview(@RequestBody  @Valid ReviewReq req) {
 
-        // <validation logic here>
-        // todo: generalise validation logic
-
-        // <retrieve data from request body>
-        System.out.println("customerMap= " +customerDTO);
-        String firstName = customerDTO.get("firstName");
-        String lastName = customerDTO.get("lastName");
-        // create DTO
-        Review customer = new Review(firstName, lastName);
-
-        // dao layer: save object to db
-        reviewRepository.save(customer);
-
-        // todo: better logging
-        // todo: generalise response message
-        return "Saved";
+    	boolean result = authService.getAuthentication(req.name, req.sessionToken);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        
+        ReviewDTO saveReview;
+        saveReview = reviewService.addReview(req);
+        
+        if (saveReview == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+        
+        ReviewRes res = new ReviewRes(saveReview);
+        
+        return ResponseEntity.ok().body(res);
     }
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<Review> getAllCustomers (){
+    @PostMapping(path = "/review")
+    public @ResponseBody ResponseEntity<ReviewRes> getReview(@RequestBody  @Valid ReviewReq req) {
 
-        return reviewRepository.findAll();
+    	boolean result = authService.getAuthentication(req.name, req.sessionToken);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        
+        ReviewDTO saveReview;
+        saveReview = reviewService.getAllReview(req.tutionOrderID);
+        
+        if (saveReview == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+        
+        ReviewRes res = new ReviewRes(saveReview);
+        
+        return ResponseEntity.ok().body(res);
     }
 
 

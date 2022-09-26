@@ -3,48 +3,75 @@ package com.peertutor.ReviewMgr.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
+@Table(name = "review")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    
+    @Column(name = "tutor_id", nullable = false, unique = true)
+    private Long tutorID;
+    
+    @Column(name = "tutionorder_id", nullable = false)
+    private Long tutionOrderID;
+    
+    @Column(name = "rating", nullable = false, unique = true)
+	private int rating;
+    
 
-    protected Review(){};
-
-    public Review(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+	@Column(name = "comment", nullable = false, unique = true)
+	private String comment;
 
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+    public Long getTutorID() {
+		return tutorID;
+	}
+	public void setTutorID(Long tutorID) {
+		this.tutorID = tutorID;
+	}
+	public Long getTutionOrderID() {
+		return tutionOrderID;
+	}
+	public void settutionOrderID(Long tutionOrderID) {
+		this.tutionOrderID = tutionOrderID;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        Review review = (Review) o;
+        if (review.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), review.getId()) &&
+                Objects.equals(getRating(), review.getRating()) &&
+                Objects.equals(getComment(), review.getComment());
     }
 }
