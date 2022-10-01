@@ -20,9 +20,9 @@ public abstract class ReviewService implements ReviewRepository {
     		reviewMgr = new Review();
     	}
     	Long tutionOrdID = tuitionOrderSvc.getTuitionOrderId();
-    	Long tutirID = tuitionOrderSvc.getTutorId();
+    	Long tutorID = tuitionOrderSvc.getTutorId();
 
-    	reviewMgr.setTutorID(tutirID);
+    	reviewMgr.setTutorID(tutorID);
     	reviewMgr.settutionOrderID(tutionOrdID);
     	reviewMgr.setRating(req.rating);
     	reviewMgr.setComment(req.comment);
