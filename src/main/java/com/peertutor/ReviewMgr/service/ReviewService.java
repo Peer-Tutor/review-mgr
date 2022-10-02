@@ -8,7 +8,7 @@ import com.peertutor.ReviewMgr.model.viewmodel.request.TuitionOrderReq;
 import com.peertutor.ReviewMgr.service.TuitionOrderSvc;
 import com.peertutor.ReviewMgr.repository.ReviewRepository;
 
-public abstract class ReviewService implements ReviewRepository {
+public class ReviewService {
 	private static final Logger logger = LoggerFactory.getLogger(ReviewService .class);
     private final ReviewMapper reviewMapper;
     private ReviewRepository reviewRepository;
