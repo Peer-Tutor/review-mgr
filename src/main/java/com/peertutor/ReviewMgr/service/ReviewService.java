@@ -14,6 +14,11 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
     private TuitionOrderSvc tuitionOrderSvc;
     
+    public ReviewService(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
+        this.reviewRepository = reviewRepository;
+        this.reviewMapper = reviewMapper;
+    }
+    
     public ReviewDTO addReview(ReviewReq req) {
     	Review reviewMgr = reviewRepository.findById(req.id);
     	if(reviewMgr == null) {
