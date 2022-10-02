@@ -74,4 +74,10 @@ public class Review {
                 Objects.equals(getRating(), review.getRating()) &&
                 Objects.equals(getComment(), review.getComment());
     }
+	@Override
+    public String toString() {
+        return "review{" +
+                "id=" + id +
+                '}';
+    }
 }
