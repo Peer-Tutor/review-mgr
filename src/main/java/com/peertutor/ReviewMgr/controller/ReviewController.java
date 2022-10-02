@@ -106,7 +106,7 @@ public class ReviewController {
 		saveReview = reviewService.getAllReview(req.tutionOrderID);
 
 		if (saveReview == null) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
 
 		ReviewRes res = new ReviewRes(saveReview);
