@@ -14,26 +14,26 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AuthService {
 
-    @Autowired
-    AppConfig appConfig;
+	@Autowired
+	AppConfig appConfig;
 
-    public boolean getAuthentication(String name, String sessionToken) {
-        String url = appConfig.getAccountMgr().get("url");
-        String port = appConfig.getAccountMgr().get("port");
+	public boolean getAuthentication(String name, String sessionToken) {
+		String url = appConfig.getAccountMgr().get("url");
+		String port = appConfig.getAccountMgr().get("port");
 
-        String endpoint = url + "/auth";
-        System.out.println("endpoint" + endpoint);
+		String endpoint = url + "/auth";
+		System.out.println("endpoint" + endpoint);
 
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Content-Type", "application/json");
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+		headers.add("Content-Type", "application/json");
 
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        AuthenticationReq req = new AuthenticationReq(name, sessionToken);
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		AuthenticationReq req = new AuthenticationReq(name, sessionToken);
 
-        HttpEntity<AuthenticationReq> request = new HttpEntity<AuthenticationReq>(req, headers);
+		HttpEntity<AuthenticationReq> request = new HttpEntity<AuthenticationReq>(req, headers);
 
-        Boolean result = restTemplate.postForObject(endpoint, request, Boolean.class);
-        return result;
-    }
+		Boolean result = restTemplate.postForObject(endpoint, request, Boolean.class);
+		return result;
+	}
 }
