@@ -39,7 +39,8 @@ public abstract class ReviewService implements ReviewRepository {
         return result;
     }
     public ReviewDTO getAllReview(Long tutionOrderID) {
-    	Review review = reviewRepository.findById(tutionOrderID);
+    	Long tutionOrdID = tuitionOrderSvc.getTuitionOrderId();
+    	Review review = reviewRepository.findById(tutionOrdID);
     	
     	if(review == null) {
     		return null;
