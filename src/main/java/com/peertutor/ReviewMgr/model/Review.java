@@ -1,8 +1,9 @@
 package com.peertutor.ReviewMgr.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -73,5 +74,11 @@ public class Review {
         return Objects.equals(getId(), review.getId()) &&
                 Objects.equals(getRating(), review.getRating()) &&
                 Objects.equals(getComment(), review.getComment());
+    }
+	@Override
+    public String toString() {
+        return "review{" +
+                "id=" + id +
+                '}';
     }
 }
