@@ -1,5 +1,10 @@
 package com.peertutor.ReviewMgr.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -76,7 +81,7 @@ public class ReviewDTO implements Serializable{
     @Override
     public String toString() {
         return "ReviewDTO{" +
-                "id=" + getId() +
+                "tutorid=" + getTutorID() +
                 ", rating=" + getRating() +
                 ", comment=" + getComment()+
                 "}";

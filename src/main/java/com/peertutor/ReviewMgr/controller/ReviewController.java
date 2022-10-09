@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 
@@ -46,34 +47,34 @@ public class ReviewController {
 		return response.toString();
 	}
 
-	@GetMapping(path="/call-app-tuition-order-mgr")
-	public @ResponseBody String callAppTwo() {
-		String url = appConfig.getTuitionOrderMgr().get("url");
-		String port = appConfig.getTuitionOrderMgr().get("port");
-
-		String endpoint = url+"/" ;
-		System.out.println("endpoint" + endpoint);
-
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
-
-		return response.toString();
-	}
-	
-	  @GetMapping(path = "/call-app-student-mgr")
-	    public @ResponseBody String callAppTwo() {
-	        String url = appConfig.getStudentMgr().get("url");
-	        String port = appConfig.getStudentMgr().get("port");
-
-
-	        String endpoint = url + "/"; //":"+port + "/";
-	        System.out.println("endpoint" + endpoint);
-
-	        RestTemplate restTemplate = new RestTemplate();
-	        ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
-
-	        return response.toString();
-	    }
+//	@GetMapping(path="/call-app-tuition-order-mgr")
+//	public @ResponseBody String callAppTwo() {
+//		String url = appConfig.getTuitionOrderMgr().get("url");
+//		String port = appConfig.getTuitionOrderMgr().get("port");
+//
+//		String endpoint = url+"/" ;
+//		System.out.println("endpoint" + endpoint);
+//
+//		RestTemplate restTemplate = new RestTemplate();
+//		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
+//
+//		return response.toString();
+//	}
+//	
+//	  @GetMapping(path = "/call-app-student-mgr")
+//	    public @ResponseBody String callAppTwo() {
+//	        String url = appConfig.getStudentMgr().get("url");
+//	        String port = appConfig.getStudentMgr().get("port");
+//
+//
+//	        String endpoint = url + "/"; //":"+port + "/";
+//	        System.out.println("endpoint" + endpoint);
+//
+//	        RestTemplate restTemplate = new RestTemplate();
+//	        ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
+//
+//	        return response.toString();
+//	    }
 
 	@PostMapping(path = "/review")
 	public @ResponseBody ResponseEntity<ReviewRes> addNewReview(@RequestBody  @Valid ReviewReq req) {
@@ -91,6 +92,9 @@ public class ReviewController {
 		}
 
 		ReviewRes res = new ReviewRes(saveReview);
+		res.rating = saveReview.getRating();
+		res.comment = saveReview.getComment();
+		
 
 		return ResponseEntity.ok().body(res);
 	}
@@ -110,7 +114,9 @@ public class ReviewController {
 		}
 
 		ReviewRes res = new ReviewRes(saveReview);
-
+		res.rating = saveReview.getRating();
+		res.comment = saveReview.getComment();
+		
 		return ResponseEntity.ok().body(res);
 	}
 
