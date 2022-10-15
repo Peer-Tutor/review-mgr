@@ -21,7 +21,7 @@ public class ReviewService {
 	}
 
 	public ReviewDTO addReview(ReviewReq req) {
-		Review reviewMgr = reviewRepository.findById(req.id);
+		Review reviewMgr = reviewRepository.findByReviewId(req.id);
 		if(reviewMgr == null) {
 			reviewMgr = new Review();
 		}
@@ -43,7 +43,7 @@ public class ReviewService {
 		return result;
 	}
 	public ReviewDTO updateReview(ReviewDTO reviewDTO) {
-		Review reviewMgr = reviewRepository.findById(reviewDTO.getId());
+		Review reviewMgr = reviewRepository.findByReviewId(reviewDTO.getId());
 		if(reviewMgr == null) {
 			reviewMgr = new Review();
 		}
