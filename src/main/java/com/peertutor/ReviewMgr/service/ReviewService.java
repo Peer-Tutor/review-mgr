@@ -63,7 +63,7 @@ public class ReviewService {
 		return result;
 	}
 	public ReviewDTO getAllReview(Long tutorID) {
-		Review review = reviewRepository.findByTutorId(tutorID);
+		Review review = reviewRepository.findByTutorID(tutorID);
 
 		if(review == null) {
 			return null;
