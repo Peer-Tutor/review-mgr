@@ -98,7 +98,7 @@ public class ReviewController {
 
 		return ResponseEntity.ok().body(res);
 	}
-	@PostMapping(path = "/review")
+	@GetMapping(path = "/review")
 	public @ResponseBody ResponseEntity<ReviewRes> getReview(@RequestBody  @Valid ReviewReq req) {
 
 		boolean result = authService.getAuthentication(req.name, req.sessionToken);

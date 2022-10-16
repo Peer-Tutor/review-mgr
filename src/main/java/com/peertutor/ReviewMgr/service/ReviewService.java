@@ -5,14 +5,18 @@ import com.peertutor.ReviewMgr.mapper.ReviewMapper;
 import com.peertutor.ReviewMgr.model.Review;
 import com.peertutor.ReviewMgr.model.viewmodel.request.ReviewReq;
 import com.peertutor.ReviewMgr.repository.ReviewRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 public class ReviewService {
 	private static final Logger logger = LoggerFactory.getLogger(ReviewService.class);
 	
+	@Autowired
 	private final ReviewMapper reviewMapper;
-	
+	@Autowired
 	private ReviewRepository reviewRepository;
 
 	public ReviewService(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
