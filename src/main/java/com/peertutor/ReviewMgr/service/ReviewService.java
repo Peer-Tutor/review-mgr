@@ -21,7 +21,7 @@ public class ReviewService {
 	}
 
 	public ReviewDTO addReview(ReviewReq req) {
-		Review reviewMgr = reviewRepository.findById(req.id);
+		Review reviewMgr = reviewRepository.findBytutionOrderID(req.tutionOrderID);
 		if(reviewMgr == null) {
 			reviewMgr = new Review();
 		}
@@ -43,7 +43,7 @@ public class ReviewService {
 		return result;
 	}
 	public ReviewDTO updateReview(ReviewDTO reviewDTO) {
-		Review reviewMgr = reviewRepository.findById(reviewDTO.getId());
+		Review reviewMgr = reviewRepository.findBytutionOrderID(reviewDTO.getTutionOrderID());
 		if(reviewMgr == null) {
 			reviewMgr = new Review();
 		}
@@ -62,8 +62,8 @@ public class ReviewService {
 
 		return result;
 	}
-	public ReviewDTO getAllReview(Long tutionOrderID) {
-		Review review = reviewRepository.findByReviewTutorId(tutionOrderID);
+	public ReviewDTO getAllReview(Long tutorID) {
+		Review review = reviewRepository.findByReviewTutorId(tutorID);
 
 		if(review == null) {
 			return null;
